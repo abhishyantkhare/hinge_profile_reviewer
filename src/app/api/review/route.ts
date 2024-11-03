@@ -18,23 +18,32 @@ export async function POST(request: Request) {
 
     // Analyze first few frames to keep costs down
     const framesToAnalyze = frames.slice(0, 3);
+
+    const content: any[] = [`I'm sharing ${framesToAnalyze.length} screenshots from a Hinge profile. Please analyze them and provide feedback on:
+        1. First impression
+        2. Photo quality and variety
+        3. Profile text and prompts
+        4. Specific suggestions for improvement`]
+
+    content.push(...framesToAnalyze.map((frame) => ({
+      type: "image_url",
+      image_url: {
+        url: frame,
+      },
+    })))
     
-    const messages = [
+    const messages: any[] = [
       {
         role: "system",
         content: "You are an expert dating profile consultant. Analyze these Hinge profile screenshots and provide specific, actionable feedback to improve the profile."
       },
       {
         role: "user",
-        content: `I'm sharing ${framesToAnalyze.length} screenshots from a Hinge profile. Please analyze them and provide feedback on:
-        1. First impression
-        2. Photo quality and variety
-        3. Profile text and prompts
-        4. Specific suggestions for improvement
-        
-        Here are the base64 encoded images: ${framesToAnalyze.map((frame, i) => `Image ${i + 1}: ${frame.substring(0, 100)}...`)}`
+        content: content
       }
     ];
+
+
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
