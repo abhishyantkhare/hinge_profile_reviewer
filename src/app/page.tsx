@@ -224,10 +224,10 @@ export default function Home() {
 
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center text-sm text-gray-500">
         <p>© 2024 Hinge Profile Review</p>
-        <a href="#" className="hover:underline">
+        <a href="/privacy-policy" className="hover:underline">
           Privacy Policy
         </a>
-        <a href="#" className="hover:underline">
+        <a href="/terms-of-service" className="hover:underline">
           Terms of Service
         </a>
       </footer>
